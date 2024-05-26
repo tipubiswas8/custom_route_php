@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\FirstTest\ModuleLinkModel;
+use App\Models\Module\ModuleLink;
 
-$moduleLink = ModuleLinkModel::where('active_status', 1)->get();
+$moduleLink = ModuleLink::where('active_status', 1)->get();
 foreach ($moduleLink as $link) {
     $controller = "App\Http\Controllers\\$link->controller";
     $route = "Illuminate\Support\Facades\Route::$link->request_type";
