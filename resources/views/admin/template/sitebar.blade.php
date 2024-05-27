@@ -1,17 +1,7 @@
 
-@php
-   $moduleRoute = []; 
-@endphp
-
-@if ($moduleRoute)
-@php
-   $moduleRoute = $moduleRoute; 
-   @endphp
-   @else
    @php
      $moduleRoute = (object) ['request_type' => 'get'] ;
    @endphp
-@endif
 {{-- Sitebar Start--}}
 <div class="col-md-2" style="height: 800px; background-color: #dde39f">
     <div class="text-white" style="height: 100%">

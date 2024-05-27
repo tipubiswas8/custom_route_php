@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2024 at 07:03 PM
+-- Generation Time: May 26, 2024 at 07:11 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,7 @@ CREATE TABLE `module_links` (
 
 INSERT INTO `module_links` (`id`, `url`, `controller`, `method`, `request_type`, `name`, `link_type`, `module_id`, `main_menu_id`, `sub_menu_id`, `active_status`, `created_at`, `updated_at`) VALUES
 (6, '/module/index', 'Module\\ModuleController', 'moduleIndex', 'get', 'module-index', 2, 54, 55, NULL, '1', '2024-05-25 01:20:22', '2024-05-25 01:20:22'),
-(7, '/menu/index', 'Module\\MenuController', 'menuIndex', 'get', 'menu-index', 2, 54, 56, NULL, '1', '2024-05-25 01:34:17', '2024-05-25 01:34:17'),
+(7, '/menu/index', 'Module\\ModuleController', 'menuIndex', 'get', 'menu-index', 2, 54, 56, NULL, '1', '2024-05-25 01:34:17', '2024-05-25 01:34:17'),
 (8, '/module/link/index', 'Module\\ModuleLinkController', 'linkIndex', 'get', 'module-link-index', 2, 54, 57, NULL, '1', '2024-05-25 01:45:21', '2024-05-25 01:45:21'),
 (13, '/module/create', 'Module\\ModuleController', 'moduleCreate', 'get', 'module-create', NULL, 54, NULL, NULL, '1', '2024-05-25 02:16:40', '2024-05-25 02:16:40'),
 (14, '/module/store', 'Module\\ModuleController', 'moduleStore', 'post', 'module-store', NULL, 54, NULL, NULL, '1', '2024-05-25 02:28:41', '2024-05-25 02:28:41'),

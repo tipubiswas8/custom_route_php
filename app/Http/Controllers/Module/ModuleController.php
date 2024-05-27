@@ -12,7 +12,7 @@ class ModuleController extends Controller
 {
     public function moduleIndex()
     {
-        $modules = Module::where(['type' => '1'])->orderBy('serial', 'ASC')->get();
+        $modules = Module::where(['type' => '1'])->orderBy('serial', 'ASC')->paginate(5);
         return view("module.index", ['modules' => $modules]);
     }
 
@@ -107,26 +107,102 @@ class ModuleController extends Controller
 
     public function menuIndex()
     {
-        $menus = Module::orderBy('serial', 'ASC')->get();
-        $allMenus = [];
-        $modules = [];
-        foreach ($menus as $menu) {
-            $parentModule = Module::select('name')->where(['type' => '1', 'id' => $menu->parent_module_id])->get();
-            $parentMenus = Module::select('id', 'name')->where(['type' => '2', 'id' => $menu->parent_menu_id])->get();
-            if ($menu->type != 2 && $menu->type != 3) {
-                continue;
-            }
-            $allMenus[] = $menu;
 
-            foreach ($parentModule as $module) {
-                $modules[] = $module->name;
-            }
-            foreach ($parentMenus as $pm) {
-                $parentMenu[] = $pm->name;
-            }
-        }
+        $array1 = array(
+            [
+                'id' => 1,
+                'name' => 'sohel',
+                'age' => 10,
+                'roll' => '2611',
+                'dept' => 'eee'
+            ],
+            [
+                'id' => 2,
+                'name' => 'rana',
+                'age' => 20,
+                'roll' => '0741',
+                'dept' => 'cse'
+            ],
+            [
+                'id' => 3,
+                'name' => 'tipu',
+                'age' => 30,
+                'roll' => '333',
+                'dept' => 'bba'
+            ],
+            [
+                'id' => 4,
+                'name' => 'name4',
+                'age' => 40,
+                'roll' => '444',
+                'dept' => 'eng'
+            ],
+            [
+                'id' => 5,
+                'name' => 'name5',
+                'age' => 50,
+                'roll' => '555',
+                'dept' => 'civil'
+            ],
+            [
+                'id' => 6,
+                'name' => 'name6',
+                'age' => 60,
+                'roll' => '6666',
+                'dept' => 'mt'
+            ]
+        );
 
-        return view("menu.index", ['menus' => $allMenus, 'modules' => $modules, 'parentMenu' => $parentMenu]);
+
+        $array2 = array(
+            [
+                'id' => 1,
+                'address' => 'sohel',
+                'phone' => 10,
+                'roll' => '2611',
+                'dept' => 'eee'
+            ],
+            [
+                'id' => 2,
+                'address' => 'rana',
+                'age' => 20,
+                'roll' => '0741',
+                'dept' => 'cse'
+            ],
+            [
+                'id' => 3,
+                'address' => 'tipu',
+                'age' => 30,
+                'roll' => '333',
+                'dept' => 'bba'
+            ]
+        );
+
+        $lengthOfarray1 = sizeof($array1);
+
+        echo $lengthOfarray1;
+        die;
+
+        // $menus = Module::orderBy('serial', 'ASC')->paginate(10);
+        // $allMenus = [];
+        // $modules = [];
+        // foreach ($menus as $menu) {
+        //     $parentModule = Module::select('name')->where(['type' => '1', 'id' => $menu->parent_module_id])->get();
+        //     $parentMenus = Module::select('id', 'name')->where(['type' => '2', 'id' => $menu->parent_menu_id])->get();
+        //     if ($menu->type != 2 && $menu->type != 3) {
+        //         continue;
+        //     }
+        //     $allMenus[] = $menu;
+
+        //     foreach ($parentModule as $module) {
+        //         $modules[] = $module->name;
+        //     }
+        //     foreach ($parentMenus as $pm) {
+        //         $parentMenu[] = $pm->name;
+        //     }
+        // }
+
+        // return view("menu.index", ['menus' => (object) $allMenus, 'modules' => $modules, 'parentMenu' => $parentMenu]);
     }
 
 
@@ -227,7 +303,7 @@ class ModuleController extends Controller
             }
         }
 
-       // dd($moduleRoute);
+        // dd($moduleRoute);
         return view('admin.dashboard.index', [
             'module' => $module,
             'mainMenus' => $mainMenus,

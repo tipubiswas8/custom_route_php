@@ -16,7 +16,7 @@ class ModuleLinkController extends Controller
 {
     public function linkIndex()
     {
-        $moduleLink = ModuleLink::all();
+        $moduleLink = ModuleLink::orderBy('id', 'DESC')->paginate(10);
         return view("module_link.index", ['moduleLink' => $moduleLink]);
     }
 
@@ -202,7 +202,7 @@ class ModuleLinkController extends Controller
                     $toTitle = Str::title($name_for_all);
                     $name_of = str_replace(" ", "", $toTitle);
                     $controller = $name_of . "Controller";
-                    $model = $name_of . "Model";
+                    $model = $name_of;
                     $seeder = $name_of . "Seeder";
                     $spase_to_under = str_replace(" ", "_", $name_for_all);
                     $table_name_lower = Str::lower($spase_to_under);
@@ -214,7 +214,7 @@ class ModuleLinkController extends Controller
                     $toTitle = Str::title($name_of_module);
                     $module_name = str_replace(" ", "", $toTitle);
                     $controller = $module_name . "Controller";
-                    $model = $module_name . "Model";
+                    $model = $module_name;
                     $seeder = $module_name . "Seeder";
                     $spase_to_under = str_replace(" ", "_", $name_of_module);
                     $module_name_lower = Str::lower($spase_to_under);
@@ -255,7 +255,7 @@ class ModuleLinkController extends Controller
             $toTitle = Str::title($sub_menu);
             $sub_menu_name = str_replace(" ", "", $toTitle);
             $controller = $sub_menu_name . "Controller";
-            $model = $sub_menu_name . "Model";
+            $model = $sub_menu_name;
             $seeder = $sub_menu_name . "Seeder";
             $spase_to_under = str_replace(" ", "_", $sub_menu);
             $sub_menu_name_lower = Str::lower($spase_to_under);
@@ -270,7 +270,7 @@ class ModuleLinkController extends Controller
             $toTitle = Str::title($main_menu);
             $main_menu_name = str_replace(" ", "", $toTitle);
             $controller = $main_menu_name . "Controller";
-            $model = $main_menu_name . "Model";
+            $model = $main_menu_name;
             $seeder = $main_menu_name . "Seeder";
             $spase_to_under = str_replace(" ", "_", $main_menu);
             $main_menu_name_lower = Str::lower($spase_to_under);
@@ -285,7 +285,7 @@ class ModuleLinkController extends Controller
             $toTitle = Str::title($name_of_module);
             $module_name = str_replace(" ", "", $toTitle);
             $controller = $module_name . "Controller";
-            $model = $module_name . "Model";
+            $model = $module_name;
             $seeder = $module_name . "Seeder";
             $spase_to_under = str_replace(" ", "_", $name_of_module);
             $module_name_lower = Str::lower($spase_to_under);

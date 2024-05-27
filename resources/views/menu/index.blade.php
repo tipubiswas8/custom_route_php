@@ -1,9 +1,8 @@
 @extends("admin.template.master")
 @section('main-content')
 
-<button class="col-md-3 bg-success">
-    <a class="text-right text-white" href="{{ route('menu-create') }}">Create</a>
-</button>
+<h4 class="text-center mt-2">Menu</h4>
+<a class="text-white col-md-3 btn btn-success mb-3" href="{{ route('menu-create') }}">Create</a>
 
 @if(session('success'))
     <div class="alert alert-success">
@@ -39,7 +38,7 @@
                 @else
                 <td>Sub Menu</td>  
                 @endif
-                <td>{{ $modules[$key] }}</td>
+                {{-- <td>{{ $modules[$key] }}</td> --}}
                 <td></td>
                 <td>{{ $menu->serial }}</td>
             @if ($menu->active_status == 1)
@@ -59,4 +58,5 @@
         @endforeach
     </tbody>
 </table>
+{{  $menus->links() }}
 @endsection

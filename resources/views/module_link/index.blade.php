@@ -1,7 +1,8 @@
 @extends("admin.template.master")
 @section('main-content')
 
-<a class="text-white col-md-3 btn btn-success" href="{{ route('module-link-create') }}">Create</a>
+<h4 class="text-center mt-2">Module Link</h4>
+<a class="text-white col-md-3 btn btn-success mb-3" href="{{ route('module-link-create') }}">Create</a>
 
 @if(session('success'))
     <div class="alert alert-success">
@@ -71,4 +72,5 @@
         @endforeach
     </tbody>
 </table>
+{{ $moduleLink->links() }}
 @endsection
