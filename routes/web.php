@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Module\ModuleLink;
+use App\Models\SecurityAndAccess\ModuleLink;
 
 $moduleLink = ModuleLink::where('active_status', 1)->get();
 foreach ($moduleLink as $link) {
