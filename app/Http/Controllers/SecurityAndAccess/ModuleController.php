@@ -11,16 +11,11 @@ use Illuminate\Support\Facades\DB;
 class ModuleController extends Controller
 {
 
+
     public function moduleSearch(Request $req)
     {
         $query = $req->input('query');
-        $modules = Module::search($query)->paginate(2);
-        return view("security_and_access.module.index", ['modules' => $modules]);
-    }
-
-    public function moduleIndex()
-    {
-        $modules = Module::where(['type' => '1'])->orderBy('serial', 'ASC')->paginate(10);
+        $modules = Module::search($query)->where(['type' => '1'])->orderBy('serial', 'ASC')->paginate(10);
         return view("security_and_access.module.index", ['modules' => $modules]);
     }
 
@@ -190,14 +185,22 @@ class ModuleController extends Controller
         }
     }
 
-    public function path($id)
+    public function path($currentPath)
     {
-        $mmRoutes = array();
+        $position = strpos($currentPath, '/');
+        $prefix = substr($currentPath, 0, $position);
+        $id = ModuleLink::select('module_id')->where(['active_status' => '1', 'link_type' => '1', 'prefix' => '/' . $prefix])->first()->module_id;
+
         $mainMenuRoute = [];
+        $mmRoutes = array();
+        $mmRoute = [];
         $subMenuRoute  = [];
         $smRoutes = [];
+        $smRoute = [];
+        $sMenus = [];
+
         $module = Module::where(['active_status' => '1', 'type' => '1', 'id' => $id])->first();
-        $moduleRoute = ModuleLink::select(['url', 'name', 'request_type'])->where(['link_type' => '1', 'module_id' => $module->id])->first();
+        $moduleRoute = ModuleLink::select(['prefix', 'url', 'name', 'request_type'])->where(['link_type' => '1', 'module_id' => $module->id])->first();
         $mainMenus = Module::where(['active_status' => '1', 'type' => '2', 'parent_module_id' => $module->id])->orderBy('serial', 'ASC')->get();
         foreach ($mainMenus as $mm) {
             $subMenus = Module::where(['active_status' => '1', 'type' => '3', 'parent_module_id' => $mm->parent_module_id, 'parent_menu_id' => $mm->id])->orderBy('serial', 'ASC')->get();
@@ -225,14 +228,13 @@ class ModuleController extends Controller
             }
         }
 
-        // dd($moduleRoute);
-        return view('security_and_access.admin.dashboard.index', [
+        return [
             'module' => $module,
+            'moduleRoute' => $moduleRoute,
             'mainMenus' => $mainMenus,
-            'sMenus' => $sMenus ?? [],
-            'moduleRoute' => $moduleRoute ?? (object) ['request_type' => 'get'],
-            'mmRoute' => $mmRoute ?? [],
-            'smRoute' => $smRoute ?? []
-        ]);
+            'mmRoute' => $mmRoute,
+            'sMenus' => $sMenus,
+            'smRoute' => $smRoute
+        ];
     }
 }

@@ -122,8 +122,8 @@
                 @if (empty($folder) && empty($existingController))
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="folder">Folder: </label>
-                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" />
+                        <label class="form-label" for="folder">Folder: <span class="text-danger">*</span></label>
+                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" @required(true) />
                     </div>
                 </div>
                 @endif
@@ -259,8 +259,8 @@
                 @if (empty($folder) && empty($existingController))
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="folder">Folder: </label>
-                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" />
+                        <label class="form-label" for="folder">Folder: <span class="text-danger">*</span></label>
+                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" @required(true) />
                     </div>
                 </div>
                 @endif
@@ -442,8 +442,8 @@
                 @if (empty($folder) && empty($existingController))
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="folder">Folder: </label>
-                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" />
+                        <label class="form-label" for="folder">Folder: <span class="text-danger">*</span></label>
+                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" @required(true) />
                     </div>
                 </div>
                 @endif
@@ -590,8 +590,8 @@
                 @if (empty($module_id))
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="folder">Folder: </label>
-                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" />
+                        <label class="form-label" for="folder">Folder: <span class="text-danger">*</span></label>
+                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" @required(true) />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -613,7 +613,7 @@
                     <div class="form-group">
                         <label class="form-label" for="model">Model: </label>
                         <input id="model" type="text" name="model" class="form-control"
-                            placeholder="Ex: Salary Model" />
+                            placeholder="Ex: Salary" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -639,6 +639,7 @@
                             <option value="put">PUT</option>
                             <option value="patch">PATCH</option>
                             <option value="delete">DELETE</option>
+                            <option value="get_and_post">GET & POST</option>
                         </select>
                     </div>
                 </div>
@@ -675,8 +676,8 @@
                 @if (empty($folder) && empty($existingController))
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="folder">Folder: </label>
-                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" />
+                        <label class="form-label" for="folder">Folder: <span class="text-danger">*</span></label>
+                        <input id="folder" type="text" name="folder" class="form-control" placeholder="Ex: Payroll" @required(true) />
                     </div>
                 </div>
                 @endif
@@ -710,6 +711,7 @@
                             <option value="put">PUT</option>
                             <option value="patch">PATCH</option>
                             <option value="delete">DELETE</option>
+                            <option value="get_and_post">GET & POST</option>
                         </select>
                     </div>
                 </div>

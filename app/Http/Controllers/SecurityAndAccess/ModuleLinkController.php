@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\File;
 
 class ModuleLinkController extends Controller
 {
+
+
     public function linkIndex()
     {
         $moduleLink = ModuleLink::orderBy('id', 'DESC')->paginate(10);
@@ -36,17 +38,20 @@ class ModuleLinkController extends Controller
             $module_id = $request->module_id;
             $step = 3;
             $folder = null;
-            $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
-            if ($existingController != null) {
-                $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
-                $position = strpos($exController, '\\');
-                $folder = $position == false ? null : substr($exController, 0, $position);
+            // without this check query injection occur in here.
+            if ($module_id) {
+                $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
+                if ($existingController != null) {
+                    $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
+                    $position = strpos($exController, '\\');
+                    $folder = $position == false ? null : substr($exController, 0, $position);
+                }
             }
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'folder' => $folder,
-                'existingController' => $existingController
+                'existingController' => $existingController ?? ''
             ]);
         }
 
@@ -64,18 +69,21 @@ class ModuleLinkController extends Controller
             $mainMenu = Module::where(['active_status' => '1', 'type' => '2', 'parent_module_id' => $module_id])->get();
             $step = 5;
             $folder = null;
-            $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
-            if ($existingController != null) {
-                $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
-                $position = strpos($exController, '\\');
-                $folder = $position == false ? null : substr($exController, 0, $position);
+            // without this check query injection occur in here.
+            if ($module_id) {
+                $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
+                if ($existingController != null) {
+                    $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
+                    $position = strpos($exController, '\\');
+                    $folder = $position == false ? null : substr($exController, 0, $position);
+                }
             }
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'mainMenu' => $mainMenu,
                 'folder' => $folder,
-                'existingController' => $existingController
+                'existingController' => $existingController ?? ''
             ]);
         }
 
@@ -105,11 +113,14 @@ class ModuleLinkController extends Controller
             $step = 8;
             $folder = null;
             $subMenu = Module::where(['active_status' => '1', 'type' => '3', 'parent_module_id' => $module_id, 'parent_menu_id' => $main_menu])->get();
-            $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
-            if ($existingController != null) {
-                $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
-                $position = strpos($exController, '\\');
-                $folder = $position == false ? null : substr($exController, 0, $position);
+            // without this check query injection occur in here.
+            if ($module_id) {
+                $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
+                if ($existingController != null) {
+                    $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
+                    $position = strpos($exController, '\\');
+                    $folder = $position == false ? null : substr($exController, 0, $position);
+                }
             }
             return view("security_and_access.module_link.create", [
                 'step' => $step,
@@ -117,7 +128,7 @@ class ModuleLinkController extends Controller
                 'main_menu' => $main_menu,
                 'subMenu' => $subMenu,
                 'folder' => $folder,
-                'existingController' => $existingController
+                'existingController' => $existingController ?? ''
             ]);
         }
 
@@ -134,17 +145,20 @@ class ModuleLinkController extends Controller
             $module_id = $request->module_id;
             $step = 10;
             $folder = null;
-            $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
-            if ($existingController != null) {
-                $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
-                $position = strpos($exController, '\\');
-                $folder = $position == false ? null : substr($exController, 0, $position);
+            // without this check query injection occur in here.
+            if ($module_id) {
+                $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
+                if ($existingController != null) {
+                    $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
+                    $position = strpos($exController, '\\');
+                    $folder = $position == false ? null : substr($exController, 0, $position);
+                }
             }
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'folder' => $folder,
-                'existingController' => $existingController
+                'existingController' => $existingController ?? ''
             ]);
         }
 
@@ -188,11 +202,13 @@ class ModuleLinkController extends Controller
             $name = $replaceToHiFen;
         }
 
-        $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
-        if ($existingController != null) {
-            $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
-            $position = strpos($exController, '\\');
-            $folder = $position == false ? null : substr($exController, 0, $position);
+        if ($module_id) {
+            $existingController = ModuleLink::select('controller')->where('module_id', $module_id)->first();
+            if ($existingController != null) {
+                $exController = ModuleLink::select('controller')->where('module_id', $module_id)->first()->controller;
+                $position = strpos($exController, '\\');
+                $folder = $position == false ? null : substr($exController, 0, $position);
+            }
         }
         if ($module_id_for_other) {
             if ($module_id) {
@@ -219,9 +235,6 @@ class ModuleLinkController extends Controller
                     $view = $module_name_lower;
                 }
             } else {
-                $folder  = $request->folder;
-                $folder = str_replace(" ", "", $folder);
-                
                 $controller = $request->controller;
                 $controller = str_replace(" ", "", $controller);
 
@@ -288,26 +301,55 @@ class ModuleLinkController extends Controller
             $view = $module_name_lower;
         }
 
-        $folderAndController =  $folder ? $folder . '\\' . $controller : $controller;
-        $folderAndModel =  $folder ? $folder . '\\' . $model : $model;
-        $folderAndSeeder =  $folder ? $folder . '\\' . $seeder : $seeder;
+        $folderAndController = $folder . '\\' . $controller;
+        $folderAndModel = $folder . '\\' . $model;
+        $folderAndSeeder = $folder . '\\' . $seeder;
         $kebab = Str::snake($folder);
-        $folderAndView =  $kebab ? $kebab . '\\' . $view : $view;
-
+        $folderAndView = $kebab . '\\' . $view;
+        $prefix = Str::lower($folder);
         try {
-            $insert = ModuleLink::create([
-                'request_type' => $request_type,
-                'url' => '/' . $url,
-                'controller' => $folderAndController,
-                'method' => $method,
-                'name' => $name,
-                'link_type' => $link_type,
-                'module_id' => $module_id,
-                'main_menu_id' => $main_menu_id,
-                'sub_menu_id' => $sub_menu_id,
-                'active_status' => $status
-            ]);
-
+            if ($request_type == 'get_and_post') {
+                $insert = ModuleLink::create([
+                    'prefix' => '/' . $prefix,
+                    'request_type' => 'get',
+                    'url' => '/' . $url,
+                    'controller' => $folderAndController,
+                    'method' => $method,
+                    'name' => $name,
+                    'link_type' => $link_type,
+                    'module_id' => $module_id,
+                    'main_menu_id' => $main_menu_id,
+                    'sub_menu_id' => $sub_menu_id,
+                    'active_status' => $status
+                ]);
+                $insert = ModuleLink::create([
+                    'prefix' => '/' . $prefix,
+                    'request_type' => 'post',
+                    'url' => '/' . $url,
+                    'controller' => $folderAndController,
+                    'method' => $method,
+                    'name' => $name,
+                    'link_type' => $link_type,
+                    'module_id' => $module_id,
+                    'main_menu_id' => $main_menu_id,
+                    'sub_menu_id' => $sub_menu_id,
+                    'active_status' => $status
+                ]);
+            } else {
+                $insert = ModuleLink::create([
+                    'prefix' => '/' . $prefix,
+                    'request_type' => 'get',
+                    'url' => '/' . $url,
+                    'controller' => $folderAndController,
+                    'method' => $method,
+                    'name' => $name,
+                    'link_type' => $link_type,
+                    'module_id' => $module_id,
+                    'main_menu_id' => $main_menu_id,
+                    'sub_menu_id' => $sub_menu_id,
+                    'active_status' => $status
+                ]);
+            }
             if ($insert) {
                 $controller_path = app_path("Http/Controllers/{$folderAndController}.php");
                 $model_path = app_path("Models/{$folderAndModel}.php");

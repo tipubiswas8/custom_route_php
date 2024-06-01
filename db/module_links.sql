@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2024 at 04:07 PM
+-- Generation Time: Jun 01, 2024 at 06:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `module_links` (
   `id` int(11) NOT NULL,
+  `prefix` varchar(20) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL,
   `controller` varchar(100) DEFAULT NULL,
   `method` varchar(100) DEFAULT NULL,
@@ -47,22 +48,22 @@ CREATE TABLE `module_links` (
 -- Dumping data for table `module_links`
 --
 
-INSERT INTO `module_links` (`id`, `url`, `controller`, `method`, `request_type`, `name`, `link_type`, `module_id`, `main_menu_id`, `sub_menu_id`, `active_status`, `created_at`, `updated_at`) VALUES
-(1, '/module/index', 'SecurityAndAccess\\ModuleController', 'moduleIndex', 'get', 'module-index', 2, 1, 2, NULL, '1', '2024-05-25 01:20:22', '2024-05-25 01:20:22'),
-(2, '/menu/index', 'SecurityAndAccess\\ModuleController', 'menuIndex', 'get', 'menu-index', 2, 1, 3, NULL, '1', '2024-05-25 01:34:17', '2024-05-25 01:34:17'),
-(3, '/module/link/index', 'SecurityAndAccess\\ModuleLinkController', 'linkIndex', 'get', 'module-link-index', 2, 1, 4, NULL, '1', '2024-05-25 01:45:21', '2024-05-25 01:45:21'),
-(4, '/module/create', 'SecurityAndAccess\\ModuleController', 'moduleCreate', 'get', 'module-create', NULL, 1, NULL, NULL, '1', '2024-05-25 02:16:40', '2024-05-25 02:16:40'),
-(5, '/module/store', 'SecurityAndAccess\\ModuleController', 'moduleStore', 'post', 'module-store', NULL, 1, NULL, NULL, '1', '2024-05-25 02:28:41', '2024-05-25 02:28:41'),
-(6, '/module/edit/{id}', 'SecurityAndAccess\\ModuleController', 'moduleEdit', 'get', 'module-edit', NULL, 1, NULL, NULL, '1', '2024-05-25 02:34:41', '2024-05-25 02:34:41'),
-(7, '/module/update', 'SecurityAndAccess\\ModuleController', 'moduleUpdate', 'patch', 'module-update', NULL, 1, NULL, NULL, '1', '2024-05-25 02:39:46', '2024-05-25 02:39:46'),
-(8, '/module/status', 'SecurityAndAccess\\ModuleController', 'moduleStatus', 'put', 'module-status', NULL, 1, NULL, NULL, '1', '2024-05-25 02:47:19', '2024-05-25 02:47:19'),
-(9, '/module/delete', 'SecurityAndAccess\\ModuleController', 'moduleDelete', 'delete', 'module-delete', NULL, 1, NULL, NULL, '1', '2024-05-25 02:49:56', '2024-05-25 02:49:56'),
-(10, '/module/path/{id}', 'SecurityAndAccess\\ModuleController', 'path', 'get', 'module-path', NULL, 1, NULL, NULL, '1', '2024-05-25 02:54:21', '2024-05-25 02:54:21'),
-(11, '/menu/create', 'SecurityAndAccess\\ModuleController', 'menuCreate', 'get', 'menu-create', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:00:24', '2024-05-25 03:00:24'),
-(12, '/menu/store', 'SecurityAndAccess\\ModuleController', 'menuStore', 'post', 'menu-store', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:10:32', '2024-05-25 03:10:32'),
-(13, '/module/link/create', 'SecurityAndAccess\\ModuleLinkController', 'linkCreate', 'get', 'module-link-create', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:14:25', '2024-05-25 03:14:25'),
-(14, '/module/link/store', 'SecurityAndAccess\\ModuleLinkController', 'linkStore', 'post', 'module-link-store', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:22:56', '2024-05-25 03:22:56'),
-(15, '//', 'SecurityAndAccess\\HomeController', 'index', 'get', '', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:34:27', '2024-05-25 03:34:27');
+INSERT INTO `module_links` (`id`, `prefix`, `url`, `controller`, `method`, `request_type`, `name`, `link_type`, `module_id`, `main_menu_id`, `sub_menu_id`, `active_status`, `created_at`, `updated_at`) VALUES
+(1, NULL, '//', 'SecurityAndAccess\\HomeController', 'index', 'get', 'home', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:34:27', '2024-05-25 03:34:27'),
+(2, '/securityandaccess', '/security/access/index', 'SecurityAndAccess\\SecurityAndAccessController', 'index', 'get', 'security-access-index', 1, 1, NULL, NULL, '1', '2024-06-01 15:56:10', '2024-06-01 15:56:10'),
+(3, '/securityandaccess', '/module/search', 'SecurityAndAccess\\ModuleController', 'moduleSearch', 'get', 'module-search', 2, 1, 2, NULL, '1', '2024-05-30 16:29:28', '2024-05-30 16:29:28'),
+(4, '/securityandaccess', '/module/create', 'SecurityAndAccess\\ModuleController', 'moduleCreate', 'get', 'module-create', NULL, 1, NULL, NULL, '1', '2024-05-25 02:16:40', '2024-05-25 02:16:40'),
+(5, '/securityandaccess', '/module/store', 'SecurityAndAccess\\ModuleController', 'moduleStore', 'post', 'module-store', NULL, 1, NULL, NULL, '1', '2024-05-25 02:28:41', '2024-05-25 02:28:41'),
+(6, '/securityandaccess', '/module/edit/{id}', 'SecurityAndAccess\\ModuleController', 'moduleEdit', 'get', 'module-edit', NULL, 1, NULL, NULL, '1', '2024-05-25 02:34:41', '2024-05-25 02:34:41'),
+(7, '/securityandaccess', '/module/update', 'SecurityAndAccess\\ModuleController', 'moduleUpdate', 'patch', 'module-update', NULL, 1, NULL, NULL, '1', '2024-05-25 02:39:46', '2024-05-25 02:39:46'),
+(8, '/securityandaccess', '/module/status', 'SecurityAndAccess\\ModuleController', 'moduleStatus', 'put', 'module-status', NULL, 1, NULL, NULL, '1', '2024-05-25 02:47:19', '2024-05-25 02:47:19'),
+(9, '/securityandaccess', '/module/delete', 'SecurityAndAccess\\ModuleController', 'moduleDelete', 'delete', 'module-delete', NULL, 1, NULL, NULL, '1', '2024-05-25 02:49:56', '2024-05-25 02:49:56'),
+(10, '/securityandaccess', '/menu/index', 'SecurityAndAccess\\ModuleController', 'menuIndex', 'get', 'menu-index', 2, 1, 3, NULL, '1', '2024-05-25 01:34:17', '2024-05-25 01:34:17'),
+(11, '/securityandaccess', '/menu/create', 'SecurityAndAccess\\ModuleController', 'menuCreate', 'get', 'menu-create', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:00:24', '2024-05-25 03:00:24'),
+(12, '/securityandaccess', '/menu/store', 'SecurityAndAccess\\ModuleController', 'menuStore', 'post', 'menu-store', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:10:32', '2024-05-25 03:10:32'),
+(13, '/securityandaccess', '/module/link/index', 'SecurityAndAccess\\ModuleLinkController', 'linkIndex', 'get', 'module-link-index', 2, 1, 4, NULL, '1', '2024-05-25 01:45:21', '2024-05-25 01:45:21'),
+(14, '/securityandaccess', '/module/link/create', 'SecurityAndAccess\\ModuleLinkController', 'linkCreate', 'get', 'module-link-create', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:14:25', '2024-05-25 03:14:25'),
+(15, '/securityandaccess', '/module/link/store', 'SecurityAndAccess\\ModuleLinkController', 'linkStore', 'post', 'module-link-store', NULL, NULL, NULL, NULL, '1', '2024-05-25 03:22:56', '2024-05-25 03:22:56');
 
 --
 -- Indexes for dumped tables
@@ -82,7 +83,7 @@ ALTER TABLE `module_links`
 -- AUTO_INCREMENT for table `module_links`
 --
 ALTER TABLE `module_links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

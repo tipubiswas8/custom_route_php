@@ -26,10 +26,10 @@ a:hover {
   <div class="container-fluid"></div>
 <div class="col-md-12">
   <div class="row">
-      @foreach ($modules as $link)
-          <a href="{{ url('module/path', $link->id) }}" class="col-md-2 modules">{{ $link->name }}
+      @foreach ($modules as $key => $module)
+          <a href="{{ url(($moduleLink[$key]->prefix ?? '') . ($moduleLink[$key]->url ?? '')) }}" class="col-md-2 modules">{{ $module->name }}
           <div>
-            <?= $link->icon ?? '<i class="fa-solid fa-image"></i>' ?>
+            <?= $module->icon ?? '<i class="fa-solid fa-image"></i>' ?>
           </div>  
           </a>
       @endforeach

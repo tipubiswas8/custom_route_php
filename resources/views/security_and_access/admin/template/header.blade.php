@@ -19,17 +19,3 @@
                 <h5 class="text-center">Custom Route</h5>
                 <hr />
             </div>
-
-
-
-
-
-
-
-
-
-                
-
-    
-
-
