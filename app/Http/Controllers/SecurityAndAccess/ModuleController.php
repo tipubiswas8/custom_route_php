@@ -115,14 +115,32 @@ class ModuleController extends Controller
             $allMenus  = (object) $menu->getOriginal();
             $parentModule = Module::select('name')->where(['type' => '1', 'id' => $menu->parent_module_id])->get();
             $parentMenus = Module::select('id', 'name')->where(['type' => '2', 'id' => $menu->parent_menu_id])->get();
-            $allMenus->module_name = $parentModule->toArray()[0]['name'];
+            $allMenus->module_name = $parentModule->toArray()[0]['name'] ?? '';
             $allMenus->parent_menu_name = $parentMenus->toArray()[0]['name'] ?? '';
             $allData[] = $allMenus;
         }
         return view("security_and_access.menu.index", ['menus' => $menus, 'allData' => $allData]);
     }
 
+    public function MenuSearch()
+    {
+        $query = request('query');
 
+        $menus = Module::whereNot('type', 1)
+            ->where('name', 'LIKE', "%{$query}%")
+            ->orWhere('type', 'LIKE', "%{$query}%")->paginate(10);
+
+        foreach ($menus as $menu) {
+            $allMenus  = (object) $menu->getOriginal();
+            $parentModule = Module::select('name')->where(['type' => '1', 'id' => $menu->parent_module_id])->paginate(10);
+            $parentMenus = Module::select('id', 'name')->where(['type' => '2', 'id' => $menu->parent_menu_id])->paginate(10);
+            $allMenus->module_name = $parentModule->toArray()[0]['name'] ?? '';
+            $allMenus->parent_menu_name = $parentMenus->toArray()[0]['name'] ?? '';
+            $allData[] = $allMenus;
+        }
+
+        return view("security_and_access.menu.index", ['menus' => $menus, 'allData' => $allData]);
+    }
 
     public function menuCreate(Request $request)
     {
@@ -178,10 +196,67 @@ class ModuleController extends Controller
                 'active_status' => $status
             ]);
             DB::commit();
-            return redirect()->back()->with("success", "Module Create Successfully!");
+            return redirect()->back()->with("success", "Menu Create Successfully!");
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with("error", $e . " Something want wrong!, please try again");
+        }
+    }
+
+    public function menuEdit($id)
+    {
+
+   
+
+            $moduleId = request('id');
+            $menu = Module::where(['type' => '2', 'id' => $id])->first();
+            // dd($moduleId);
+            $mainMenus = Module::where(['type' => '2', 'parent_module_id' => $moduleId])->get();
+            $type = 2;
+            return view("security_and_access.menu.edit", [
+                'menu' => $menu,
+                'id' => $id,
+                'mainMenus' => $mainMenus,
+                'type' => $type,
+            ]);
+        
+        $menu = Module::where(['type' => '2', 'id' => $id])->first();
+        $modules = Module::where('type', '1')->get();
+        $buttonStatus = "Next";
+        $type = 1;
+
+        return view("security_and_access.menu.edit", [
+            'buttonStatus' => $buttonStatus,
+            'modules' => $modules,
+            'menu' => $menu,
+            'type' => $type,
+        ]);
+    }
+
+    public function menuUpdate(Request $request)
+    {
+        $name = $request->name;
+        $type = $request->type;
+        $serial = $request->serial;
+        $icon = $request->icon;
+        $parent_module_id  = $request->id;
+        $parent_menu_id  = $request->parent_menu_id;
+        $status = $request->status;
+        try {
+            $menu = Module::find($request->id);
+            $menu->name = $name;
+            $menu->type = $type;
+            $menu->serial = $serial;
+            $menu->icon = $icon;
+            $menu->parent_module_id = $parent_module_id;
+            $menu->parent_menu_id = $parent_menu_id ? $parent_menu_id : '';
+            $menu->active_status = $status;
+            $menu->save();
+            DB::commit();
+            return redirect()->back()->with("success", "Menu Update Successfully!");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with("error", $e . " Menu update failed!, please try again");
         }
     }
 

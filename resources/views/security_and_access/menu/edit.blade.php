@@ -78,19 +78,19 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label" for="name">Menu Name: <span style="color: red">*</span></label>
-                            <input id="name" type="text" name="name" class="form-control" @required(true)>
+                            <input id="name" type="text" name="name" class="form-control" @required(true) @php if(isset($menu)) { @endphp value="{{ $menu->name }}" @php } @endphp />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label" for="serial">Serial: <span style="color: red">*</span></label>
-                            <input id="serial" type="number" name="serial" class="form-control" @required(true)>
+                            <input id="serial" type="number" name="serial" class="form-control" @required(true) @php if(isset($menu)) { @endphp value="{{ $menu->serial }}" @php } @endphp />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label" for="icon">Icon:</label>
-                            <input id="icon" type="text" name="icon" class="form-control">
+                            <input id="icon" type="text" name="icon" class="form-control" @php if(isset($menu)) { @endphp value="{{ $menu->icon }}" @php } @endphp />
                         </div>
                     </div>
                     <div class="col-md-6">

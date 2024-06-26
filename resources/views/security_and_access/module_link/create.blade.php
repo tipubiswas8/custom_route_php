@@ -155,6 +155,17 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label class="form-label" for="permission">Permission: <span class="text-danger">*</span></label>
+                        <select id="permission" name="permission" class="form-control" @required(true)>
+                            <option value="">--Select Permission--</option>
+                            @foreach($permissions as $permission)
+                            <option value="{{ $permission->id }}">{{ $permission->permission_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label class="form-label" for="status">Status:</label>
                         <select id="status" name="status" class="form-control">
                             <option value="1" selected>Active</option>
@@ -297,6 +308,17 @@
                     <div class="form-group">
                         <label class="form-label" for="method">Method: <span class="text-danger">*</span></label>
                         <input id="method" type="text" name="method" class="form-control" @required(true)>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label" for="permission">Permission: <span class="text-danger">*</span></label>
+                        <select id="permission" name="permission" class="form-control" @required(true)>
+                            <option value="">--Select Permission--</option>
+                            @foreach($permissions as $permission)
+                            <option value="{{ $permission->id }}">{{ $permission->permission_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -484,6 +506,17 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label class="form-label" for="permission">Permission: <span class="text-danger">*</span></label>
+                        <select id="permission" name="permission" class="form-control" @required(true)>
+                            <option value="">--Select Permission--</option>
+                            @foreach($permissions as $permission)
+                            <option value="{{ $permission->id }}">{{ $permission->permission_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label class="form-label" for="status">Status:</label>
                         <select id="status" name="status" class="form-control">
                             <option value="1" selected>Active</option>
@@ -652,10 +685,12 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="status">Status:</label>
-                        <select id="status" name="status" class="form-control">
-                            <option value="1" selected>Active</option>
-                            <option value="0">Inactive</option>
+                        <label class="form-label" for="permission">Permission: <span class="text-danger">*</span></label>
+                        <select id="permission" name="permission" class="form-control" @required(true)>
+                            <option value="">--Select Permission--</option>
+                            @foreach($permissions as $permission)
+                            <option value="{{ $permission->id }}">{{ $permission->permission_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -663,6 +698,15 @@
                     <div class="form-group">
                         <label class="form-label" for="view">View: </label>
                         <input id="view" type="text" name="view" class="form-control" placeholder="Ex: salary" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label" for="status">Status:</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="1" selected>Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -712,6 +756,17 @@
                             <option value="patch">PATCH</option>
                             <option value="delete">DELETE</option>
                             <option value="get_and_post">GET & POST</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label" for="permission">Permission: <span class="text-danger">*</span></label>
+                        <select id="permission" name="permission" class="form-control" @required(true)>
+                            <option value="">--Select Permission--</option>
+                            @foreach($permissions as $permission)
+                            <option value="{{ $permission->id }}">{{ $permission->permission_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

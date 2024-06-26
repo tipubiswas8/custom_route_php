@@ -3,27 +3,36 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\SecurityAndAccess\ModuleLink;
 
+$moduleLinks = ModuleLink::where('active_status', 1)->get();
 
-// $moduleLinks = ModuleLink::where('active_status', 1)->get();
-// foreach ($moduleLinks as $link) {
-//     Route::prefix("$link->prefix")->group(function () use ($link) {
-//         $controller = "App\Http\Controllers\\{$link->controller}";
-//         $routeType = strtolower($link->request_type);
-//         if (in_array($routeType, ['get', 'post', 'put', 'delete', 'patch'])) {
-//             Route::$routeType("/{$link->url}", [$controller, $link->method])->name($link->name);
-//         }
-//     });
-// }
-
-
-$moduleLink = ModuleLink::where('active_status', 1)->get();
-foreach ($moduleLink as $link) {
+foreach ($moduleLinks as $link) {
     Route::prefix($link->prefix)->group(function () use ($link) {
-    $controller = "App\Http\Controllers\\$link->controller";
-    $route = "Illuminate\Support\Facades\Route::$link->request_type";
-    call_user_func($route, "/$link->url", [$controller, $link->method])->name($link->name);
+        $controller = "App\Http\Controllers\\{$link->controller}";
+        $routeType = strtolower($link->request_type);
+
+        if (in_array($routeType, ['get', 'post', 'put', 'delete', 'patch'])) {
+            $route = Route::$routeType("/{$link->url}", [$controller, $link->method])->name($link->name);
+
+            // Example middleware array, can be pulled from the database or elsewhere
+            $middlewares = explode(',', $link->middlewares); // Assuming $link->middlewares is a comma-separated string
+
+            if (!empty(array_filter($middlewares))) {
+                $route->middleware($middlewares);
+            }
+        }
     });
 }
+
+
+
+// $moduleLink = ModuleLink::where('active_status', 1)->get();
+// foreach ($moduleLink as $link) {
+//     Route::prefix($link->prefix)->group(function () use ($link) {
+//     $controller = "App\Http\Controllers\\$link->controller";
+//     $route = "Illuminate\Support\Facades\Route::$link->request_type";
+//     call_user_func($route, "/$link->url", [$controller, $link->method])->name($link->name);
+//     });
+// }
 
 
 
@@ -52,6 +61,3 @@ foreach ($moduleLink as $link) {
 // Route::get('module/link/create', [ModuleLinkController::class, 'linkCreate'])->name('module-link-create');
 // Route::post('module/link/store', [ModuleLinkController::class, 'linkStore'])->name('module-link-store');
 // });
-
-
-

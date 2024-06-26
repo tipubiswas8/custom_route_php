@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SecurityAndAccess\Module;
 use App\Models\SecurityAndAccess\ModuleLink;
+use App\Models\SecurityAndAccess\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
@@ -14,8 +15,6 @@ use Illuminate\Support\Facades\File;
 
 class ModuleLinkController extends Controller
 {
-
-
     public function linkIndex()
     {
         $moduleLink = ModuleLink::orderBy('id', 'DESC')->paginate(10);
@@ -47,11 +46,13 @@ class ModuleLinkController extends Controller
                     $folder = $position == false ? null : substr($exController, 0, $position);
                 }
             }
+            $permissions = Permission::all();
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'folder' => $folder,
-                'existingController' => $existingController ?? ''
+                'existingController' => $existingController ?? '',
+                'permissions' => $permissions
             ]);
         }
 
@@ -78,12 +79,14 @@ class ModuleLinkController extends Controller
                     $folder = $position == false ? null : substr($exController, 0, $position);
                 }
             }
+            $permissions = Permission::all();
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'mainMenu' => $mainMenu,
                 'folder' => $folder,
-                'existingController' => $existingController ?? ''
+                'existingController' => $existingController ?? '',
+                'permissions' => $permissions
             ]);
         }
 
@@ -122,13 +125,15 @@ class ModuleLinkController extends Controller
                     $folder = $position == false ? null : substr($exController, 0, $position);
                 }
             }
+            $permissions = Permission::all();
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'main_menu' => $main_menu,
                 'subMenu' => $subMenu,
                 'folder' => $folder,
-                'existingController' => $existingController ?? ''
+                'existingController' => $existingController ?? '',
+                'permissions' => $permissions
             ]);
         }
 
@@ -154,11 +159,13 @@ class ModuleLinkController extends Controller
                     $folder = $position == false ? null : substr($exController, 0, $position);
                 }
             }
+            $permissions = Permission::all();
             return view("security_and_access.module_link.create", [
                 'step' => $step,
                 'module_id' => $module_id,
                 'folder' => $folder,
-                'existingController' => $existingController ?? ''
+                'existingController' => $existingController ?? '',
+                'permissions' => $permissions
             ]);
         }
 
@@ -180,6 +187,7 @@ class ModuleLinkController extends Controller
         $main_menu_id  = $request->main_menu;
         $sub_menu_id  = $request->sub_menu;
         $module_id_for_other  = $request->module_id_for_other;
+        $permission = $request->permission;
         $status = $request->status;
         $method  = $request->method;
         $method  = str_replace(" ", "", $method);
@@ -195,11 +203,11 @@ class ModuleLinkController extends Controller
         } else {
             $substrSecondBreak = $url;
         }
-        $replaceToHiFen = Str::replace('/', '-', $substrSecondBreak);
-        if (substr($replaceToHiFen, -1) === '-') {
-            $name = substr($replaceToHiFen, 0, -1);
+        $replaceToDot = Str::replace('/', '.', $substrSecondBreak);
+        if (substr($replaceToDot, -1) === '.') {
+            $name = substr($replaceToDot, 0, -1);
         } else {
-            $name = $replaceToHiFen;
+            $name = $replaceToDot;
         }
 
         if ($module_id) {
@@ -315,11 +323,12 @@ class ModuleLinkController extends Controller
                     'url' => '/' . $url,
                     'controller' => $folderAndController,
                     'method' => $method,
-                    'name' => $name,
+                    'name' => $prefix . '.' . $name,
                     'link_type' => $link_type,
                     'module_id' => $module_id,
                     'main_menu_id' => $main_menu_id,
                     'sub_menu_id' => $sub_menu_id,
+                    'permission' => $permission,
                     'active_status' => $status
                 ]);
                 $insert = ModuleLink::create([
@@ -328,24 +337,26 @@ class ModuleLinkController extends Controller
                     'url' => '/' . $url,
                     'controller' => $folderAndController,
                     'method' => $method,
-                    'name' => $name,
+                    'name' => $prefix . '.' . $name,
                     'link_type' => $link_type,
                     'module_id' => $module_id,
                     'main_menu_id' => $main_menu_id,
+                    'permission' => $permission,
                     'sub_menu_id' => $sub_menu_id,
                     'active_status' => $status
                 ]);
             } else {
                 $insert = ModuleLink::create([
                     'prefix' => '/' . $prefix,
-                    'request_type' => 'get',
+                    'request_type' => $request_type,
                     'url' => '/' . $url,
                     'controller' => $folderAndController,
                     'method' => $method,
-                    'name' => $name,
+                    'name' => $prefix . '.' . $name,
                     'link_type' => $link_type,
                     'module_id' => $module_id,
                     'main_menu_id' => $main_menu_id,
+                    'permission' => $permission,
                     'sub_menu_id' => $sub_menu_id,
                     'active_status' => $status
                 ]);

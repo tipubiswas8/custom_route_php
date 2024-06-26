@@ -2,7 +2,7 @@
 @section('main-content')
 
 <h4 class="text-center mt-2">Menu</h4>
-<form action="">
+<form action="{{ route('securityandaccess.menu.search') }}">
     @csrf
     <div class="col-md-12 mb-3">
         <div class="row">
@@ -12,7 +12,7 @@
             <div class="col-md-5">
             </div>
             <div class="col-md-3 me-0 pe-0">
-                <input type="search" name="query" class="form-control" required placeholder="Type here">
+                <input type="search" name="query" class="form-control" required placeholder="Search here by name">
             </div>
             <div class="col-md-1 ms-0 ps-0">
                 <input type="submit" class="form-control btn btn-primary" value="Search">
@@ -69,8 +69,14 @@
             </td>
             @endif
             <td>
-                <button class="btn btn-sm btn-warning">Edit</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
+                <form class="d-inline" action="{{ route('securityandaccess.menu.edit', $menu->id) }}">
+                    <button class="btn btn-sm btn-warning" type="submit">Edit</button>
+                </form>
+                <form class="d-inline" action="{{ route('module-delete', $menu->id) }}" method="post">
+                    @method('delete')
+                    @csrf
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
             </td>
         </tr>
         @endforeach
